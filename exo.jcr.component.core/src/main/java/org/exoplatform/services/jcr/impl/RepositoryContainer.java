@@ -594,8 +594,10 @@ public class RepositoryContainer extends ExoContainer
    @Override
    public synchronized void stop()
    {
-      RepositoryImpl repository = (RepositoryImpl)getComponentInstanceOfType(RepositoryImpl.class);
+      super.stop();
+      super.unregisterAllComponents();
 
+      RepositoryImpl repository = (RepositoryImpl)getComponentInstanceOfType(RepositoryImpl.class);
       try
       {
          repository.setState(ManageableRepository.OFFLINE);
@@ -604,9 +606,6 @@ public class RepositoryContainer extends ExoContainer
       {
          log.error("Can not switch repository to OFFLINE", e);
       }
-
-      super.stop();
-      super.unregisterAllComponents();
    }
 
    /**
